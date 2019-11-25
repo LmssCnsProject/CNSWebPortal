@@ -1,0 +1,9 @@
+.AcisTablePage .title-block h1, button {
+    display: inline-block;
+}
+.AcisTablePage .container-fluid {
+    position: relative;
+}
+.AcisTablePage .title-block button {
+    float: right;
+}

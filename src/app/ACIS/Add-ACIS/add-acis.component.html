@@ -1,0 +1,2845 @@
+<div class="container-fluid">
+  <div class="addacisform-header">
+    <ol class="breadcrumb mb-1">
+      <li class="breadcrumb-item">
+        <a href="#"> <i class="fa fa-home"></i> Home </a>
+      </li>
+      <li class="breadcrumb-item"><a href="#"> Advanced Clinical Information Service </a></li>
+    </ol>
+  </div>
+  <div class="acisForm">
+    <form [formGroup]="addAcisForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="title">
+            Advanced Clinical Information Service </h1>
+          <div class="ml-auto btns-block pull-right">
+            <button [hidden]="hideBtn" *ngIf="formAcisEditBtn" type="button" class="btn btn-secondary btn-sm"
+              (click)="onAcisEditForm()">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+            </button>
+            <button *ngIf="formAcisUpdateBtn" type="submit" class="btn btn-primary btn-sm">
+              <i class="fa fa-save mr-2"></i>Update</button>
+            <button *ngIf="newAcisFormBtn" type="submit" class="btn btn-primary btn-sm">
+              <i class="fa fa-save mr-2"></i>Save</button>
+            <button type="button" (click)="closeAcisForm()" class="btn btn-light btn-sm btn-close">
+              <i class="fa fa-close"></i> Close</button>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-1 mb-1">
+      <div class="inner-block">
+        <div class="row">
+          <div class="col-sm-3 form-field patientinfo-select">
+            <div class="form-group">
+              <label for="ACIS_Patientinfo"> Patient Information
+                <span class="text-danger required-symbol">*</span></label>
+                <select class="form-control form-control-sm" formControlName="ACIS_Patientinfo">
+                  <option selected [ngValue]="null">Select Patient Information.</option>
+                  <option *ngFor="let therapyType of ACIS_Patientinfo" [value]="therapyType">{{ therapyType }}
+                  </option>
+                </select>
+              <div
+                *ngIf="!addAcisForm.controls['ACIS_Patientinfo'].valid && addAcisForm.controls['ACIS_Patientinfo'].touched"
+                class="text-danger error-msg">
+                Select Patient Information
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 exceptions-select">
+            <label for="Number"> Exceptions </label>
+            <div class="row">
+              <div class="col-sm-4">
+                <span class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="noshow" (change)="show = !show"
+                    formControlName="show">
+                  <label class="custom-control-label" for="noshow">No Show</label>
+                </span>
+              </div>
+              <div class="col-sm-4">
+                <span class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="note">
+                  <label class="custom-control-label" for="note">Note Only</label>
+                </span>
+              </div>
+              <div class="col-sm-4">
+                <span class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="indt">
+                  <label class="custom-control-label" for="indt">Independent</label>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 therapyhour-select">
+            <div class="form-group">
+              <label for="Hours"> Therapy Hour
+                <span class="text-danger required-symbol">*</span></label>
+              <select class="form-control form-control-sm" formControlName="Hours">
+                <option selected [ngValue]="null">Select Therapy Hour...</option>
+                <option *ngFor="let hour of Hours" [value]="hour">{{ hour }}
+                </option>
+              </select>
+              <div *ngIf="!addAcisForm.controls['Hours'].valid && addAcisForm.controls['Hours'].touched"
+                class="text-danger error-msg">
+                Select Therapy Hour.
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="mt-1 mb-2">
+        <div class="row">
+          <div class="col-sm-6 form-field">
+            <div class="form-group">
+              <label> CNS Location </label>
+              <input type="text" class="form-control form-control-sm">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label> CNS Patient ID </label>
+              <input type="text" class="form-control form-control-sm">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-field">
+            <div class="form-group">
+              <label> First Name </label>
+              <input type="text" class="form-control form-control-sm">
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label> Last Name </label>
+              <input type="text" class="form-control form-control-sm">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-field">
+            <div class="form-group">
+              <label> Therapy Date </label>
+              <input type="date" class="form-control form-control-sm">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="TherapyType"> Therapy Type
+                <span class="text-danger required-symbol">*</span></label>
+              <select class="form-control form-control-sm" formControlName="TherapyType">
+                <option selected [ngValue]="null">Select Therapy Type...</option>
+                <option *ngFor="let therapyType of TherapyType" [value]="therapyType">{{ therapyType }}
+                </option>
+              </select>
+              <div *ngIf="!addAcisForm.controls['TherapyType'].valid && addAcisForm.controls['TherapyType'].touched"
+                class="text-danger error-msg">
+                Select Therapy Type.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-field">
+            <div class="form-group">
+              <label for="Therapist"> Therapist
+                <span class="text-danger required-symbol">*</span></label>
+              <select class="form-control form-control-sm" formControlName="Therapist">
+                <option selected [ngValue]="null">Select Therapist...</option>
+                <option *ngFor="let therapists of Therapist" [value]="therapists">{{ therapists }}
+                </option>
+              </select>
+              <div *ngIf="!addAcisForm.controls['Therapist'].valid && addAcisForm.controls['Therapist'].touched"
+                class="text-danger error-msg">
+                Select Therapist.
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label> Aides </label>
+              <select class="form-control form-control-sm">
+                <option> Select Aides... </option>
+                <option> </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!show">
+        <div class="inner-block">
+          <table class="table table-bordered text-center">
+            <thead class="thead-light">
+              <tr>
+                <th> Time </th>
+                <th> PA1 </th>
+                <th> PA2 </th>
+                <th> AL </th>
+                <th> PD </th>
+                <th> AR </th>
+                <th> PR </th>
+                <th> E </th>
+                <th> SI </th>
+                <th> XX </th>
+                <th> YY </th>
+                <th> N </th>
+                <th> P </th>
+                <th> F </th>
+                <th> AB </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 00-15 </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa1_1">
+                    <label class="custom-control-label" for="pa1_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa2_1">
+                    <label class="custom-control-label" for="pa2_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="al_1">
+                    <label class="custom-control-label" for="al_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pd_1">
+                    <label class="custom-control-label" for="pd_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ar_1">
+                    <label class="custom-control-label" for="ar_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pr_1">
+                    <label class="custom-control-label" for="pr_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="e_1">
+                    <label class="custom-control-label" for="e_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="si_1">
+                    <label class="custom-control-label" for="si_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="xx_1">
+                    <label class="custom-control-label" for="xx_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="yy_1">
+                    <label class="custom-control-label" for="yy_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="n_1">
+                    <label class="custom-control-label" for="n_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="p_1">
+                    <label class="custom-control-label" for="p_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="f_1">
+                    <label class="custom-control-label" for="f_1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ab_1">
+                    <label class="custom-control-label" for="ab_1"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td> 15-30 </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa1_2">
+                    <label class="custom-control-label" for="pa1_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa2_2">
+                    <label class="custom-control-label" for="pa2_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="al_2">
+                    <label class="custom-control-label" for="al_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pd_2">
+                    <label class="custom-control-label" for="pd_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ar_2">
+                    <label class="custom-control-label" for="ar_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pr_2">
+                    <label class="custom-control-label" for="pr_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="e_2">
+                    <label class="custom-control-label" for="e_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="si_2">
+                    <label class="custom-control-label" for="si_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="xx_2">
+                    <label class="custom-control-label" for="xx_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="yy_2">
+                    <label class="custom-control-label" for="yy_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="n_2">
+                    <label class="custom-control-label" for="n_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="p_2">
+                    <label class="custom-control-label" for="p_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="f_2">
+                    <label class="custom-control-label" for="f_2"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ab_2">
+                    <label class="custom-control-label" for="ab_2"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td> 30-45 </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa1_3">
+                    <label class="custom-control-label" for="pa1_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa2_3">
+                    <label class="custom-control-label" for="pa2_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="al_3">
+                    <label class="custom-control-label" for="al_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pd_3">
+                    <label class="custom-control-label" for="pd_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ar_3">
+                    <label class="custom-control-label" for="ar_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pr_3">
+                    <label class="custom-control-label" for="pr_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="e_3">
+                    <label class="custom-control-label" for="e_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="si_3">
+                    <label class="custom-control-label" for="si_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="xx_3">
+                    <label class="custom-control-label" for="xx_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="yy_3">
+                    <label class="custom-control-label" for="yy_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="n_3">
+                    <label class="custom-control-label" for="n_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="p_3">
+                    <label class="custom-control-label" for="p_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="f_3">
+                    <label class="custom-control-label" for="f_3"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ab_3">
+                    <label class="custom-control-label" for="ab_3"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td> 45-00 </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa1_4">
+                    <label class="custom-control-label" for="pa1_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pa2_4">
+                    <label class="custom-control-label" for="pa2_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="al_4">
+                    <label class="custom-control-label" for="al_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pd_4">
+                    <label class="custom-control-label" for="pd_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ar_4">
+                    <label class="custom-control-label" for="ar_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pr_4">
+                    <label class="custom-control-label" for="pr_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="e_4">
+                    <label class="custom-control-label" for="e_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="si_4">
+                    <label class="custom-control-label" for="si_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="xx_4">
+                    <label class="custom-control-label" for="xx_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="yy_4">
+                    <label class="custom-control-label" for="yy_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="n_4">
+                    <label class="custom-control-label" for="n_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="p_4">
+                    <label class="custom-control-label" for="p_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="f_4">
+                    <label class="custom-control-label" for="f_4"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="ab_4">
+                    <label class="custom-control-label" for="ab_4"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="inner-block">
+          <div class="row">
+            <div class="col-sm-12 form-field">
+              <div class="form-group">
+                <label> Bowel/Bladder Schedule </label>
+              </div>
+            </div>
+          </div>
+          <hr class="mt-1 mb-1">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Patient Initiates ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Staff asked patient if they need to go ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Patient was productive in restroom ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> patient Incontinent ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Ate during the session ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Drank during the session ? </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Food </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Amount </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Type </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label> Amount </label>
+                <select class="form-control form-control-sm">
+                  <option> </option>
+                  <option> </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="task1">
+          <div class="inner-block">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="task_1" formControlName="show1">
+                    <label class="custom-control-label" for="task_1">Task_1</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-light btn-sm btn-close">
+                    Select <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Assessment/Interventions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Impairment </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Special Instructions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Sub Components </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Units </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Days from Admission </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Attachments Materials - </label>
+                  <input class="choosefile" type="file">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Video( Please attach here ) </label>
+                  <input type="file">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 form-field textarea">
+                <div class="form-group">
+                  <label> Description & Procedure </label>
+                  <textarea class="form-control form-control-sm" rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> The performance values and time difference </label>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-success btn-sm ">
+                    Start <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-sm btn-close">
+                    Play <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-info btn-sm btn-close">
+                    Pause <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger btn-sm btn-close">
+                    Stop <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> Start Time </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> computed value </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="inner-block">
+            <table class="table table-bordered text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th rowspan="2"> Trial Number </th>
+                  <th colspan="2"> Data Recorded </th>
+                  <th rowspan="2"> Start Time </th>
+                  <th rowspan="2"> Stop Time </th>
+                  <th rowspan="2"> Difference </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="inner-block">
+            <table class="table table-bordered text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th rowspan="2"> S.No </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                  <th rowspan="2"> Comp Value </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 1 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                </tr>
+                <tr>
+                  <td> 2 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                </tr>
+                <tr>
+                  <td> 3 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                </tr>
+                <tr>
+                  <td> 4 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                </tr>
+                <tr>
+                  <td> 5 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+                </tr>
+                <tr>
+                  <td> Mn </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> SD </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="inner-block">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <label> Calculations </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> S.No </th>
+                    <th rowspan="2"> Computed Value </th>
+                    <th rowspan="2"> Computed Value </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="inner-block">
+            <table class="table table-bordered text-center">
+              <thead class="thead-light">
+                <tr>
+                  <th rowspan="2"> Title </th>
+                  <th rowspan="2"> Time </th>
+                  <th rowspan="2"> Result </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 1 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 2 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 3 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 4 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 5 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 6 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 7 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 8 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 9 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+                <tr>
+                  <td> 10 </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                  <td> <input class="form-control form-control-sm"> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="inner-block">
+            <div class="row">
+              <div class="col-sm-12 form-field textarea">
+                <div class="form-group">
+                  <label> Therapy Notes </label>
+                  <textarea class="form-control form-control-sm" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="task2">
+
+          <div class="inner-block">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="task_2" (change)="show2 = !show2"
+                      formControlName="show2">
+                    <label class="custom-control-label" for="task_2">Task_2</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="show2">
+              <hr class="mt-1 mb-1">
+              <div class="row">
+                <div class="col-sm-12 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-light btn-sm btn-close">
+                      Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-1 mb-1">
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Assessment/Interventions </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Impairment </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Special Instructions </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Sub Components </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Units </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Days from Admission </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Attachments Materials - </label>
+                    <input class="choosefile" type="file">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Video( Please attach here ) </label>
+                    <input type="file">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 form-field textarea">
+                  <div class="form-group">
+                    <label> Description & Procedure </label>
+                    <textarea class="form-control form-control-sm" rows="5"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> The performance values and time difference </label>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success btn-sm ">
+                      Start <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-sm btn-close">
+                      Play <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-info btn-sm btn-close">
+                      Pause <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-sm btn-close">
+                      Stop <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Start Time </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> computed value </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="inner-block">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> Trial Number </th>
+                      <th colspan="2"> Data Recorded </th>
+                      <th rowspan="2"> Start Time </th>
+                      <th rowspan="2"> Stop Time </th>
+                      <th rowspan="2"> Difference </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="inner-block">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> S.No </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                      <th rowspan="2"> Comp Value </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 1 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                    </tr>
+                    <tr>
+                      <td> 2 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                    </tr>
+                    <tr>
+                      <td> 3 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                    </tr>
+                    <tr>
+                      <td> 4 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                    </tr>
+                    <tr>
+                      <td> 5 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+                    </tr>
+                    <tr>
+                      <td> Mn </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> SD </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="inner-block">
+                <div class="row">
+                  <div class="col-sm-12 form-field">
+                    <div class="form-group">
+                      <label> Calculations </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                      <tr>
+                        <th rowspan="2"> S.No </th>
+                        <th rowspan="2"> Computed Value </th>
+                        <th rowspan="2"> Computed Value </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td> 1 </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                      </tr>
+                      <tr>
+                        <td> 2 </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                      </tr>
+                      <tr>
+                        <td> 3 </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                      </tr>
+                      <tr>
+                        <td> 4 </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                      </tr>
+                      <tr>
+                        <td> 5 </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                        <td> <input class="form-control form-control-sm"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="inner-block">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> Title </th>
+                      <th rowspan="2"> Time </th>
+                      <th rowspan="2"> Result </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 1 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 2 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 3 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 4 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 5 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 6 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 7 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 8 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 9 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 10 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="inner-block">
+                <div class="row">
+                  <div class="col-sm-12 form-field textarea">
+                    <div class="form-group">
+                      <label> Therapy Notes </label>
+                      <textarea class="form-control form-control-sm" rows="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="task3">
+          <div class="inner-block">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="task_3" (change)="show3 = !show3"
+                      formControlName="show3">
+                    <label class="custom-control-label" for="task_3">Task_3</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="show3">
+              <hr class="mt-1 mb-1">
+              <div class="row">
+                <div class="col-sm-12 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-light btn-sm btn-close">
+                      Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-1 mb-1">
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Assessment/Interventions </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Impairment </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Special Instructions </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Sub Components </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> Units </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Days from Admission </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Attachments Materials - </label>
+                    <input class="choosefile" type="file">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label> Video( Please attach here ) </label>
+                    <input type="file">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 form-field textarea">
+                  <div class="form-group">
+                    <label> Description & Procedure </label>
+                    <textarea class="form-control form-control-sm" rows="5"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-field">
+                  <div class="form-group">
+                    <label> The performance values and time difference </label>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success btn-sm ">
+                      Start <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-sm btn-close">
+                      Play <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-field">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-info btn-sm btn-close">
+                      Pause <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-sm btn-close">
+                      Stop <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Start Time </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> computed value </label>
+                    <input type="text" class="form-control form-control-sm">
+                  </div>
+                </div>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Trial Number </th>
+                    <th colspan="2"> Data Recorded </th>
+                    <th rowspan="2"> Start Time </th>
+                    <th rowspan="2"> Stop Time </th>
+                    <th rowspan="2"> Difference </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> S.No </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+                  </tr>
+                  <tr>
+                    <td> Mn </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> SD </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field">
+                  <div class="form-group">
+                    <label> Calculations </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> S.No </th>
+                      <th rowspan="2"> Computed Value </th>
+                      <th rowspan="2"> Computed Value </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 1 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 2 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 3 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 4 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 5 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Title </th>
+                    <th rowspan="2"> Time </th>
+                    <th rowspan="2"> Result </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 6 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 7 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 8 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 9 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 10 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field textarea">
+                  <div class="form-group">
+                    <label> Therapy Notes </label>
+                    <textarea class="form-control form-control-sm" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="task4">
+        <div class="inner-block">
+          <div class="row">
+            <div class="col-sm-12 form-field">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="task_4" (change)="show4 = !show4"
+                    formControlName="show4">
+                  <label class="custom-control-label" for="task_4">Task_4</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="show4">
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-light btn-sm btn-close">
+                    Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Assessment/Interventions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Impairment </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Special Instructions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Sub Components </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Units </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Days from Admission </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Attachments Materials - </label>
+                  <input class="choosefile" type="file">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Video( Please attach here ) </label>
+                  <input type="file">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 form-field textarea">
+                <div class="form-group">
+                  <label> Description & Procedure </label>
+                  <textarea class="form-control form-control-sm" rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> The performance values and time difference </label>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-success btn-sm ">
+                    Start <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-sm btn-close">
+                    Play <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-info btn-sm btn-close">
+                    Pause <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger btn-sm btn-close">
+                    Stop <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> Start Time </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> computed value </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Trial Number </th>
+                    <th colspan="2"> Data Recorded </th>
+                    <th rowspan="2"> Start Time </th>
+                    <th rowspan="2"> Stop Time </th>
+                    <th rowspan="2"> Difference </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> S.No </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+                  </tr>
+                  <tr>
+                    <td> Mn </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> SD </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field">
+                  <div class="form-group">
+                    <label> Calculations </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> S.No </th>
+                      <th rowspan="2"> Computed Value </th>
+                      <th rowspan="2"> Computed Value </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 1 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 2 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 3 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 4 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 5 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Title </th>
+                    <th rowspan="2"> Time </th>
+                    <th rowspan="2"> Result </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 6 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 7 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 8 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 9 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 10 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field textarea">
+                  <div class="form-group">
+                    <label> Therapy Notes </label>
+                    <textarea class="form-control form-control-sm" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="task5">
+
+        <div class="inner-block">
+          <div class="row">
+            <div class="col-sm-12 form-field">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="task_5" (change)="show5 = !show5"
+                    formControlName="show5">
+                  <label class="custom-control-label" for="task_5">Task_5</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="show5">
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-12 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-light btn-sm btn-close">
+                    Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-1 mb-1">
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Assessment/Interventions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Impairment </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Special Instructions </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Sub Components </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> Units </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Days from Admission </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Attachments Materials - </label>
+                  <input class="choosefile" type="file">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label> Video( Please attach here ) </label>
+                  <input type="file">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 form-field textarea">
+                <div class="form-group">
+                  <label> Description & Procedure </label>
+                  <textarea class="form-control form-control-sm" rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-field">
+                <div class="form-group">
+                  <label> The performance values and time difference </label>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-success btn-sm ">
+                    Start <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary btn-sm btn-close">
+                    Play <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3 form-field">
+                <div class="form-group">
+                  <button type="button" class="btn btn-info btn-sm btn-close">
+                    Pause <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger btn-sm btn-close">
+                    Stop <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> Start Time </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label> computed value </label>
+                  <input type="text" class="form-control form-control-sm">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Trial Number </th>
+                    <th colspan="2"> Data Recorded </th>
+                    <th rowspan="2"> Start Time </th>
+                    <th rowspan="2"> Stop Time </th>
+                    <th rowspan="2"> Difference </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> S.No </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                    <th rowspan="2"> Comp Value </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <i class="fa fa-times-circle" aria-hidden="true"></i> </td>
+                  </tr>
+                  <tr>
+                    <td> Mn </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> SD </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field">
+                  <div class="form-group">
+                    <label> Calculations </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <table class="table table-bordered text-center">
+                  <thead class="thead-light">
+                    <tr>
+                      <th rowspan="2"> S.No </th>
+                      <th rowspan="2"> Computed Value </th>
+                      <th rowspan="2"> Computed Value </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 1 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 2 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 3 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 4 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                    <tr>
+                      <td> 5 </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                      <td> <input class="form-control form-control-sm"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="inner-block">
+              <table class="table table-bordered text-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th rowspan="2"> Title </th>
+                    <th rowspan="2"> Time </th>
+                    <th rowspan="2"> Result </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> 1 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 2 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 3 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 4 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 5 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 6 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 7 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 8 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 9 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                  <tr>
+                    <td> 10 </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                    <td> <input class="form-control form-control-sm"> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="inner-block">
+              <div class="row">
+                <div class="col-sm-12 form-field textarea">
+                  <div class="form-group">
+                    <label> Therapy Notes </label>
+                    <textarea class="form-control form-control-sm" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inner-block">
+        <div class="row">
+          <div class="col-sm-12 form-field">
+            <div class="form-group">
+              <label> Historical Data </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <table class="table table-bordered text-center">
+            <thead class="thead-light">
+              <tr>
+                <th rowspan="2"> Days from Admission </th>
+                <th rowspan="2"> Trials </th>
+                <th rowspan="2"> Mean </th>
+                <th rowspan="2"> Stan Dev </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> <input class="form-control form-control-sm"> </td>
+                <td> <input class="form-control form-control-sm"> </td>
+                <td> <input class="form-control form-control-sm"> </td>
+                <td> <input class="form-control form-control-sm"> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+  </form>
+</div>
+</div>

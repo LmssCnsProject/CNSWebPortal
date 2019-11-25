@@ -1,0 +1,12 @@
+.backto-top
+{
+  max-width: 50px;
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+}
+.backto-top a{
+display: block;
+cursor: pointer;
+}
+

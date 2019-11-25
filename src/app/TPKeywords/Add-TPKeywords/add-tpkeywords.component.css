@@ -1,0 +1,113 @@
+/* Add key words form styling start here */
+
+a:hover {
+    text-decoration: none;
+}
+
+.addkeywordsform-header {
+    font-size: 15px;
+}
+
+.addkeywordsform-header hr {
+    margin-top: -10px;
+}
+
+.addkeywordsform-header .status {
+    color: #009bd6;
+}
+
+.addkeywordsform-header .status span {
+    color: #000;
+}
+
+.breadcrumb {
+    padding: 0px;
+    background-color: #fff;
+}
+
+.addKeywordsForm .btns-block button {
+    padding: 5px 18px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.addKeywordsForm .btns-block .btn-close {
+    background: lightseagreen;
+    color: #fff;
+}
+
+.addKeywordsForm .title {
+    display: inline-block;
+    margin: 0px;
+    line-height: 38px;
+}
+
+.addKeywordsForm .ml-auto .btn {
+    margin: 5px;
+}
+
+.addKeywordsForm {
+    margin-bottom: 50px;
+}
+
+.form-check {
+    margin-left: 25px;
+}
+
+.keywordsform {
+    width: 750px;
+    margin: auto;
+}
+
+.addKeywordsForm .inner-block {
+    max-width: 900px;
+    margin: auto;
+    -webkit-box-shadow: 0 0 3px 3px #dadce0;
+    box-shadow: 0 0 3px 3px #e8ebf1;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.addKeywordsForm .form-field:nth-child(odd) {
+    padding-right: 50px;
+}
+
+.addKeywordsForm .form-field:nth-child(odd).textarea {
+    padding-right: 15px;
+}
+
+.Gridtype-table .normal-values {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.Gridtype-table thead th {
+    vertical-align: middle;
+}
+
+.addKeywordsForm label {
+    color: #009bd6;
+}
+
+.gridtype .label {
+    display: block;
+}
+
+.gridtype .custom-radio label {
+    color: #000;
+}
+
+.forminfomsg {
+    text-align: left;
+}
+
+.tableno th:first-child {
+    width: 15%;
+}
+
+.Therapytype-select.disabled {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* Add key words form styling end here */

@@ -1,0 +1,64 @@
+.addacisform-header {
+  font-size: 15px;
+}
+
+.addacisform-header hr {
+  margin-top: -10px;
+}
+
+.breadcrumb {
+  padding: 0px;
+  background-color: #fff;
+}
+
+.acisForm .btns-block button {
+  padding: 5px 18px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.acisForm .btns-block .btn-close {
+  background: lightseagreen;
+  color: #fff;
+}
+
+.acisForm .title {
+  display: inline-block;
+  margin: 0px;
+  line-height: 38px;
+}
+
+.acisForm .ml-auto .btn {
+  margin: 5px;
+}
+
+.acisForm {
+  margin-bottom: 50px;
+}
+
+.acisForm .inner-block {
+  max-width: 900px;
+  margin: auto;
+  -webkit-box-shadow: 0 0 3px 3px #dadce0;
+  box-shadow: 0 0 3px 3px #e8ebf1;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.acisForm .form-field:nth-child(odd).textarea {
+  padding-right: 15px;
+}
+
+.acisForm label {
+  color: #009bd6;
+}
+
+.patientinfo-select {
+  max-width: 27%;
+  flex: 0 0 27%;
+}
+
+.exceptions-select {
+  flex: 0 0 48%;
+  max-width: 48%;
+}

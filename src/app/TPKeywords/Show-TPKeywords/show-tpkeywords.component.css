@@ -1,0 +1,10 @@
+.Showtpdata-table
+{
+    position: relative;
+}
+.delete-btnblock
+{
+    position: absolute;
+    right: 160px;
+    top: 0;
+}

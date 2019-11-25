@@ -1,0 +1,420 @@
+<div class="container-fluid">
+    <div class="addkeywordsform-header">
+        <ol class="breadcrumb mb-1">
+            <li class="breadcrumb-item">
+                <a href="#"> <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#">New Treatment Plan Keywords </a></li>
+        </ol>
+    </div>
+    <div *ngIf="successMsg" class="alert alert-success" role="alert">
+        <strong>Success!</strong> Document submitted successfully!
+    </div>
+    <div *ngIf="updateMsg" class="alert alert-secondary" role="alert">
+        <strong>Success!</strong> Document updated successfully!
+    </div>
+    <div class="addKeywordsForm">
+        <form [formGroup]="addTpKeyWordsForm" (ngSubmit)="onSubmit()">
+            <div class="row m-0">
+                <div class="col-md-12 p-0">
+                    <h1 class="title">
+                        New Treatment Plan Keywords </h1>
+                    <div class="ml-auto btns-block pull-right">
+                        <button [hidden]="hideBtn" *ngIf="formEditBtn" type="button" class="btn btn-secondary btn-sm"
+                            (click)="onEditForm()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                        </button>
+                        <button *ngIf="formUpdateBtn" type="submit" class="btn btn-primary btn-sm"><i
+                                class="fa fa-save mr-2"></i>Update</button>
+                        <button *ngIf="newFormBtn" type="submit" class="btn btn-primary btn-sm"><i
+                                class="fa fa-save mr-2"></i>Save</button>
+                        <button type="button" class="btn btn-light btn-sm btn-close" (click)="closeNewForm()"><i
+                                class="fa fa-close"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-1 mb-1">
+            <div class="inner-block">
+                <div class="row">
+                    <div class="col-sm-6 form-field">
+                        <div class="form-group">
+                            <label for="TherapyType"> Therapy Type
+                                <span class="text-danger required-symbol">*</span></label>
+                            <select
+                                [className]="formData?.TherapyType != null && !newForm ? 'Therapytype-select form-control form-control-sm disabled' : 'form-control form-control-sm enabled'"
+                                formControlName="TherapyType">
+                                <option selected [ngValue]="null">Select Therapy type...</option>
+                                <option *ngFor="let therapyType of therapytypes" [value]="therapyType">{{ therapyType }}
+                                </option>
+                            </select>
+                            <div *ngIf="!addTpKeyWordsForm.controls['TherapyType'].valid && addTpKeyWordsForm.controls['TherapyType'].touched"
+                                class="text-danger error-msg">
+                                Select Therapy Type.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-field">
+                        <div class="form-group">
+                            <label for="PresentActivity"> Interventions <span
+                                    class="text-danger required-symbol">*</span></label>
+                            <input [readonly]="formData?.PresentActivity != null && !newForm" type="text"
+                                formControlName="PresentActivity" class="form-control form-control-sm">
+                            <div *ngIf="!addTpKeyWordsForm.controls['PresentActivity'].valid && addTpKeyWordsForm.controls['PresentActivity'].touched"
+                                class="text-danger error-msg">
+                                Interventions is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-field">
+                        <span class="form-group">
+                            <label for=" SubComp"> Sub Components</label>
+                            <input [readonly]="formData?.SubComp != null && !newForm" type="text"
+                                formControlName="SubComp" (keyup)="checkDuplicated()" #SubComp
+                                class="form-control form-control-sm">
+                        </span>
+                        <span
+                            *ngIf="!addTpKeyWordsForm.controls['SubComp'].invalid && addTpKeyWordsForm.controls['SubComp'].dirty">
+                            <span *ngIf="isExists" class="text-danger error-msg">
+                                This Sub component name is already exists
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 gridtype">
+                        <div class="form-group">
+                            <label for="Type">Grid Type <span class="text-danger required-symbol">*</span></label>
+                            <div class="">
+                                <fieldset [disabled]="formData?.Type != null && !radiodisabled">
+                                    <label class="md-check mr-4">
+                                        <input type="radio" value="1" formControlName="Type"
+                                            (click)="setradio('GridTypeYes')" [checked]="formData?.Type === true">
+                                        Yes
+                                    </label>
+                                    <label class="md-check">
+                                        <input type="radio" value="0" formControlName="Type"
+                                            (click)="setradio('GridTypeNo')" [checked]="formData?.Type === false">
+                                        No
+                                    </label>
+                                </fieldset>
+                            </div>
+                            <div *ngIf="!addTpKeyWordsForm.controls['Type'].valid && addTpKeyWordsForm.controls['Type'].touched"
+                                class="text-danger mb-3 error-msg">
+                                Grid Type is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-field">
+                        <div class="form-group">
+                            <label for="Normal "> Normal </label>
+                            <input [readonly]="formData?.Normal != null && !newForm" type="text"
+                                formControlName="Normal" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="Number"> Serial Number </label>
+                            <input [readonly]="formData?.Number != null && !newForm" type="text"
+                                formControlName="Number" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="video"> Education Materials - </label>
+                            <input class="choosefile" type="file" id="video" (change)="onFileSelected($event)">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="video"> Video( Please attach here ) </label>
+                            <input type="file" id="video">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-field textarea">
+                        <div class="form-group">
+                            <label for="Description"> Description </label>
+                            <textarea [readonly]="formData?.Description != null && !newForm"
+                                formControlName="Description" class="form-control form-control-sm" rows="5"
+                                id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-field textarea">
+                        <div class="form-group">
+                            <label for="Procedure"> Procedure </label>
+                            <textarea [readonly]="formData?.Procedure != null && !newForm" formControlName="Procedure"
+                                class="form-control form-control-sm" rows="5" id="procedure"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="Gridtype-table text-center">
+                    <div *ngIf="isSelected('GridTypeNo')">
+                        <table class="table  table-bordered tableno">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th> S.No </th>
+                                    <th> Title </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td> <input [readonly]="formData?.Title_1 != null && !newForm"
+                                            formControlName="Title_1" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td> <input [readonly]="formData?.Title_2 != null && !newForm"
+                                            formControlName="Title_2" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td> <input [readonly]="formData?.Title_3 != null && !newForm"
+                                            formControlName="Title_3" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td> <input [readonly]="formData?.Title_4 != null && !newForm"
+                                            formControlName="Title_4" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td> <input [readonly]="formData?.Title_5 != null && !newForm"
+                                            formControlName="Title_5" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td> <input [readonly]="formData?.Title_6 != null && !newForm"
+                                            formControlName="Title_6" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td> <input [readonly]="formData?.Title_7 != null && !newForm"
+                                            formControlName="Title_7" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td> <input [readonly]="formData?.Title_8 != null && !newForm"
+                                            formControlName="Title_8" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td> <input [readonly]="formData?.Title_9 != null && !newForm"
+                                            formControlName="Title_9" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td> <input [readonly]="formData?.Title_10 != null && !newForm"
+                                            formControlName="Title_10" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td> <input [readonly]="formData?.Title_11 != null && !newForm"
+                                            formControlName="Title_11" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td> <input [readonly]="formData?.Title_12 != null && !newForm"
+                                            formControlName="Title_12" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>13</td>
+                                    <td> <input [readonly]="formData?.Title_13 != null && !newForm"
+                                            formControlName="Title_13" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>14</td>
+                                    <td> <input [readonly]="formData?.Title_14 != null && !newForm"
+                                            formControlName="Title_14" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>15</td>
+                                    <td> <input [readonly]="formData?.Title_15 != null && !newForm"
+                                            formControlName="Title_15" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>16</td>
+                                    <td> <input [readonly]="formData?.Title_16 != null && !newForm"
+                                            formControlName="Title_16" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>17</td>
+                                    <td> <input [readonly]="formData?.Title_17 != null && !newForm"
+                                            formControlName="Title_17" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>18</td>
+                                    <td> <input [readonly]="formData?.Title_18 != null && !newForm"
+                                            formControlName="Title_18" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>19</td>
+                                    <td> <input [readonly]="formData?.Title_19 != null && !newForm"
+                                            formControlName="Title_19" class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td>20</td>
+                                    <td> <input [readonly]="formData?.Title_20 != null && !newForm"
+                                            formControlName="Title_20" class="form-control form-control-sm"> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="isSelected('GridTypeYes')">
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th rowspan="2">S.No</th>
+                                    <th rowspan="2">Title</th>
+                                    <th rowspan="2">Data Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>C1</td>
+                                    <td><input [readonly]="formData?.ColumnType_1 != null && !newForm"
+                                            formControlName="ColumnType_1" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control  form-control-sm" id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C2</td>
+                                    <td><input [readonly]="formData?.ColumnType_2 != null && !newForm"
+                                            formControlName="ColumnType_2" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control  form-control-sm" id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C3</td>
+                                    <td><input [readonly]="formData?.ColumnType_3 != null && !newForm"
+                                            formControlName="ColumnType_3" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm form-control form-control-sm"
+                                            id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C4</td>
+                                    <td><input [readonly]="formData?.ColumnType_4 != null && !newForm"
+                                            formControlName="ColumnType_4" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm form-control form-control-sm"
+                                            id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C5</td>
+                                    <td><input [readonly]="formData?.ColumnType_5 != null && !newForm"
+                                            formControlName="ColumnType_5" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm" id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C6</td>
+                                    <td><input [readonly]="formData?.ColumnType_6 != null && !newForm"
+                                            formControlName="ColumnType_6" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm" id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C7</td>
+                                    <td><input [readonly]="formData?.ColumnType_7 != null && !newForm"
+                                            formControlName="ColumnType_7" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm form-control form-control-sm"
+                                            id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C8</td>
+                                    <td><input [readonly]="formData?.ColumnType_8 != null && !newForm"
+                                            formControlName="ColumnType_8" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm form-control form-control-sm"
+                                            id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>C9</td>
+                                    <td><input [readonly]="formData?.ColumnType_9 != null && !newForm"
+                                            formControlName="ColumnType_9" class="form-control form-control-sm"></td>
+                                    <td><select class="form-control form-control-sm form-control form-control-sm"
+                                            id="Therapy Type">
+                                            <option selected [ngValue]="null">Select data type...</option>
+                                            <option *ngFor="let datatype of tableYesDatatype" [value]="datatype">
+                                                {{ datatype }}</option>
+                                        </select></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-danger forminfomsg"><span>*</span> Please use formula variables like
+                            C1,C2,C3,....(don't use formula variables like A1,A2,B1,B2,...) Example: (C1+C2)/(C3+C4)
+                        </p>
+                        <table class="table table-bordered">
+                            <thead class="text-center thead-light">
+                                <tr>
+                                    <th colspan="2"> Formula 1 </th>
+                                    <th colspan="2"> Formula 2 </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> Title </td>
+                                    <td> <input class="form-control form-control-sm"> </td>
+                                    <td> Title </td>
+                                    <td> <input class="form-control form-control-sm"> </td>
+                                </tr>
+                                <tr>
+                                    <td> Formula </td>
+                                    <td> <input class="form-control form-control-sm"> </td>
+                                    <td> Formula </td>
+                                    <td> <input class="form-control form-control-sm"> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="Score Sheets"> Score Sheets - English </label>
+                            <input type="file" id="Score Sheets">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="video"> Score Sheets - Spanish </label>
+                            <input type="file" id="video">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

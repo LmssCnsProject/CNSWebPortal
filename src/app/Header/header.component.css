@@ -1,0 +1,17 @@
+.logo {
+    max-width: 150px;
+    margin-left: 15px;
+}
+
+.active {
+    background-color: #36c6d3;
+}
+
+.fixed-top {
+    padding: 0px;
+}
+
+.navbar-text {
+    padding: 0px;
+    margin-right: 15px;
+}

@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+ <div class="wrapper">
+    <!-- Show Tp keywords table -->
+    <div *ngIf="ShowtpkeywordsTable; else addtpKeywordsform">
+        <div class="Showtpdata-table">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="title-block">
+                            <h3 class="title">Treatment Plan Keywords</h3>
+                        </div>
+                        <div class="addkword-btnblock float-right">
+                            <button type="button" class="btn btn-primary" (click)="getForm()">New Keywords</button>
+                        </div>
+                        <app-show-tpkeywords (hideTpkeywords)="hideTpkeywords($event)"></app-show-tpkeywords>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Tp Keywords form -->
+    <ng-template #addtpKeywordsform>
+        <app-add-tpkeywords [newForm]="newForm" [formExisted]="formExisted" [formBtn]="newFormBtn"
+            [editBtn]="formEditBtn" [formData]="formInputData" (hideTpkeywords)="hideTpkeywords($event)">
+        </app-add-tpkeywords>
+    </ng-template>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

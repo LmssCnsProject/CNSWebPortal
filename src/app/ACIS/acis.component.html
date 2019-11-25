@@ -1,0 +1,23 @@
+<div class="AcisTablePage">
+    <app-header></app-header>
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div *ngIf="ShowAcisTable; else AddAcisForm">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="title-block">
+                            <h1 class="title">Advanced Clinical information</h1>
+                            <button (click)="getAcisForm()" type="button" class="btn btn-primary"> New Acis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <app-show-acis (hideAcisTable)="hideAcisTable($event)"></app-show-acis>
+            </div>
+        </div>
+    </div>
+    <ng-template #AddAcisForm>
+        <app-add-acis (hideAcisTable)="hideAcisTable($event)" [formBtn]="newAcisFormBtn" [editBtn]="formAcisEditBtn"></app-add-acis>
+    </ng-template>
+    <app-footer></app-footer>
+</div>
