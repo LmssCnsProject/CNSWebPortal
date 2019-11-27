@@ -13,6 +13,6 @@ export class ShowAcisDataService {
   constructor(private _http: HttpClient) { }
 
   getShowacisdata() {
-    return this._http.get<ShowAcisData[]>(this.apiUrl + '/tpKeywordsDataController/selectAcisData');
+    return this._http.get<ShowAcisData[]>(this.apiUrl + '/acisDataController/selectAcisData');
   }
 }
