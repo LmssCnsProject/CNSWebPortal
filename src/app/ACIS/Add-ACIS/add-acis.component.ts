@@ -47,6 +47,36 @@ export class AddAcisComponent implements OnInit {
     'Harry'
   ];
 
+  PerformanceValues_1: Array<string> = [
+    '1',
+    '2',
+    '3'
+  ];
+
+  PerformanceValues_2: Array<string> = [
+    '1',
+    '2',
+    '3'
+  ];
+
+  PerformanceValues_3: Array<string> = [
+    '1',
+    '2',
+    '3'
+  ];
+
+  PerformanceValues_4: Array<string> = [
+    '1',
+    '2',
+    '3'
+  ];
+
+  PerformanceValues_5: Array<string> = [
+    '1',
+    '2',
+    '3'
+  ];
+
   public addAcisForm: FormGroup;
   public hideBtn: boolean = false;
   public formAcisUpdateBtn: boolean = false;
@@ -62,7 +92,12 @@ export class AddAcisComponent implements OnInit {
       Hours: [null, Validators.required],
       TherapyType: [null, Validators.required],
       Therapist: [null, Validators.required],
-      ACIS_Patientinfo: [null, Validators.required]
+      ACIS_Patientinfo: [null, Validators.required],
+      PerformanceValues_1: [null, Validators.required],
+      PerformanceValues_2: [null, Validators.required],
+      PerformanceValues_3: [null, Validators.required],
+      PerformanceValues_4: [null, Validators.required],
+      PerformanceValues_5: [null, Validators.required]
     })
   }
 
@@ -82,7 +117,11 @@ export class AddAcisComponent implements OnInit {
     this.addAcisForm.controls['TherapyType'].markAsTouched();
     this.addAcisForm.controls['Therapist'].markAsTouched();
     this.addAcisForm.controls['ACIS_Patientinfo'].markAsTouched();
-
+    this.addAcisForm.controls['PerformanceValues_1'].markAsTouched();
+    this.addAcisForm.controls['PerformanceValues_2'].markAsTouched();
+    this.addAcisForm.controls['PerformanceValues_3'].markAsTouched();
+    this.addAcisForm.controls['PerformanceValues_4'].markAsTouched();
+    this.addAcisForm.controls['PerformanceValues_5'].markAsTouched();
   };
 
 }

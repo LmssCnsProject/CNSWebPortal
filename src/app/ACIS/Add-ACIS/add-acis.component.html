@@ -741,12 +741,23 @@
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">
-                  <label> The performance values and time difference </label>
+                  <label for="PerformanceValues_1"> The performance values and time difference
+                    <span class="text-danger required-symbol">*</span></label>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-sm">
+                  <select class="form-control form-control-sm" formControlName="PerformanceValues_1">
+                    <option selected [ngValue]="null">Select Performance values.</option>
+                    <option *ngFor="let PerformanceValues of PerformanceValues_1" [value]="PerformanceValues">
+                      {{ PerformanceValues }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="!addAcisForm.controls['PerformanceValues_1'].valid && addAcisForm.controls['PerformanceValues_1'].touched"
+                    class="text-danger error-msg">
+                    Select performance values
+                  </div>
                 </div>
               </div>
             </div>
@@ -1172,12 +1183,23 @@
               <div class="row">
                 <div class="col-sm-6 form-field">
                   <div class="form-group">
-                    <label> The performance values and time difference </label>
+                    <label for="PerformanceValues_2"> The performance values and time difference
+                      <span class="text-danger required-symbol">*</span></label>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-sm">
+                    <select class="form-control form-control-sm" formControlName="PerformanceValues_2">
+                      <option selected [ngValue]="null">Select Performance values.</option>
+                      <option *ngFor="let PerformanceValues of PerformanceValues_2" [value]="PerformanceValues">
+                        {{ PerformanceValues }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="!addAcisForm.controls['PerformanceValues_2'].valid && addAcisForm.controls['PerformanceValues_2'].touched"
+                      class="text-danger error-msg">
+                      Select performance values
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1604,12 +1626,23 @@
               <div class="row">
                 <div class="col-sm-6 form-field">
                   <div class="form-group">
-                    <label> The performance values and time difference </label>
+                    <label for="PerformanceValues_3"> The performance values and time difference
+                      <span class="text-danger required-symbol">*</span></label>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-sm">
+                    <select class="form-control form-control-sm" formControlName="PerformanceValues_3">
+                      <option selected [ngValue]="null">Select Performance values.</option>
+                      <option *ngFor="let PerformanceValues of PerformanceValues_3" [value]="PerformanceValues">
+                        {{ PerformanceValues }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="!addAcisForm.controls['PerformanceValues_3'].valid && addAcisForm.controls['PerformanceValues_3'].touched"
+                      class="text-danger error-msg">
+                      Select performance values
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2037,12 +2070,23 @@
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">
-                  <label> The performance values and time difference </label>
+                  <label for="PerformanceValues_4"> The performance values and time difference
+                    <span class="text-danger required-symbol">*</span></label>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-sm">
+                  <select class="form-control form-control-sm" formControlName="PerformanceValues_4">
+                    <option selected [ngValue]="null">Select Performance values.</option>
+                    <option *ngFor="let PerformanceValues of PerformanceValues_4" [value]="PerformanceValues">
+                      {{ PerformanceValues }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="!addAcisForm.controls['PerformanceValues_4'].valid && addAcisForm.controls['PerformanceValues_4'].touched"
+                    class="text-danger error-msg">
+                    Select performance values
+                  </div>
                 </div>
               </div>
             </div>
@@ -2470,12 +2514,23 @@
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">
-                  <label> The performance values and time difference </label>
+                  <label for="PerformanceValues_5"> The performance values and time difference
+                    <span class="text-danger required-symbol">*</span></label>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-sm">
+                  <select class="form-control form-control-sm" formControlName="PerformanceValues_5">
+                    <option selected [ngValue]="null">Select Performance values.</option>
+                    <option *ngFor="let PerformanceValues of PerformanceValues_5" [value]="PerformanceValues">
+                      {{ PerformanceValues }}
+                    </option>
+                  </select>
+                  <div
+                    *ngIf="!addAcisForm.controls['PerformanceValues_5'].valid && addAcisForm.controls['PerformanceValues_5'].touched"
+                    class="text-danger error-msg">
+                    Select performance values
+                  </div>
                 </div>
               </div>
             </div>
