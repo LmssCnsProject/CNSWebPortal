@@ -22,7 +22,7 @@
               <i class="fa fa-save mr-2"></i>Update</button>
             <button *ngIf="newAcisFormBtn" type="submit" class="btn btn-primary btn-sm">
               <i class="fa fa-save mr-2"></i>Save</button>
-            <button type="button" (click)="closeAcisForm()" class="btn btn-light btn-sm btn-close">
+            <button type="button" (click)="closeAcisForm()" class="btn btn-danger btn-sm btn-close">
               <i class="fa fa-close"></i> Close</button>
           </div>
         </div>
@@ -34,8 +34,8 @@
             <div class="form-group">
               <label for="ACIS_Patientinfo"> Patient Information
                 <span class="text-danger required-symbol">*</span></label>
-                <select class="form-control form-control-sm" formControlName="ACIS_Patientinfo">
-                  <option selected [ngValue]="null">Select Patient Information.</option>
+                <select [ngClass]="{'inputerror' : !addAcisForm.controls['ACIS_Patientinfo'].valid && addAcisForm.controls['ACIS_Patientinfo'].touched}" class="form-control form-control-sm" formControlName="ACIS_Patientinfo">
+                  <option selected [ngValue]="null">Select Patient Information</option>
                   <option *ngFor="let therapyType of ACIS_Patientinfo" [value]="therapyType">{{ therapyType }}
                   </option>
                 </select>
@@ -74,19 +74,19 @@
             <div class="form-group">
               <label for="Hours"> Therapy Hour
                 <span class="text-danger required-symbol">*</span></label>
-              <select class="form-control form-control-sm" formControlName="Hours">
+              <select [ngClass]="{'inputerror' : !addAcisForm.controls['Hours'].valid && addAcisForm.controls['Hours'].touched}" class="form-control form-control-sm" formControlName="Hours">
                 <option selected [ngValue]="null">Select Therapy Hour...</option>
                 <option *ngFor="let hour of Hours" [value]="hour">{{ hour }}
                 </option>
               </select>
               <div *ngIf="!addAcisForm.controls['Hours'].valid && addAcisForm.controls['Hours'].touched"
                 class="text-danger error-msg">
-                Select Therapy Hour.
+                Select Therapy Hour
               </div>
             </div>
           </div>
         </div>
-        <hr class="mt-1 mb-2">
+        <hr class="mt-1 mb-4">
         <div class="row">
           <div class="col-sm-6 form-field">
             <div class="form-group">
@@ -127,14 +127,14 @@
             <div class="form-group">
               <label for="TherapyType"> Therapy Type
                 <span class="text-danger required-symbol">*</span></label>
-              <select class="form-control form-control-sm" formControlName="TherapyType">
+              <select [ngClass]="{'inputerror' : !addAcisForm.controls['TherapyType'].valid && addAcisForm.controls['TherapyType'].touched}" class="form-control form-control-sm" formControlName="TherapyType">
                 <option selected [ngValue]="null">Select Therapy Type...</option>
                 <option *ngFor="let therapyType of TherapyType" [value]="therapyType">{{ therapyType }}
                 </option>
               </select>
               <div *ngIf="!addAcisForm.controls['TherapyType'].valid && addAcisForm.controls['TherapyType'].touched"
                 class="text-danger error-msg">
-                Select Therapy Type.
+                Select Therapy Type
               </div>
             </div>
           </div>
@@ -144,14 +144,14 @@
             <div class="form-group">
               <label for="Therapist"> Therapist
                 <span class="text-danger required-symbol">*</span></label>
-              <select class="form-control form-control-sm" formControlName="Therapist">
+              <select [ngClass]="{'inputerror' : !addAcisForm.controls['Therapist'].valid && addAcisForm.controls['Therapist'].touched}" class="form-control form-control-sm" formControlName="Therapist">
                 <option selected [ngValue]="null">Select Therapist...</option>
                 <option *ngFor="let therapists of Therapist" [value]="therapists">{{ therapists }}
                 </option>
               </select>
               <div *ngIf="!addAcisForm.controls['Therapist'].valid && addAcisForm.controls['Therapist'].touched"
                 class="text-danger error-msg">
-                Select Therapist.
+                Select Therapist
               </div>
             </div>
           </div>
@@ -544,12 +544,12 @@
         <div class="inner-block">
           <div class="row">
             <div class="col-sm-12 form-field">
-              <div class="form-group">
+              <div class="">
                 <label> Bowel/Bladder Schedule </label>
               </div>
             </div>
           </div>
-          <hr class="mt-1 mb-1">
+          <hr class="mt-1 mb-4">
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
@@ -651,7 +651,7 @@
             </div>
           </div>
         </div>
-        <div id="task1">
+        <div class="task1" id="task1">
           <div class="inner-block">
             <div class="row">
               <div class="col-sm-12 form-field">
@@ -663,16 +663,16 @@
                 </div>
               </div>
             </div>
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-12 form-field">
                 <div class="form-group">
-                  <button type="button" class="btn btn-light btn-sm btn-close">
+                  <button type="button" class="btn btn-success btn-sm btn-close">
                     Select <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
                 </div>
               </div>
             </div>
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">
@@ -1105,16 +1105,16 @@
               </div>
             </div>
             <div *ngIf="show2">
-              <hr class="mt-1 mb-1">
+              <hr class="mt-1 mb-4">
               <div class="row">
                 <div class="col-sm-12 form-field">
                   <div class="form-group">
-                    <button type="button" class="btn btn-light btn-sm btn-close">
+                    <button type="button" class="btn btn-success btn-sm btn-close">
                       Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
                   </div>
                 </div>
               </div>
-              <hr class="mt-1 mb-1">
+              <hr class="mt-1 mb-4">
               <div class="row">
                 <div class="col-sm-6 form-field">
                   <div class="form-group">
@@ -1548,16 +1548,16 @@
               </div>
             </div>
             <div *ngIf="show3">
-              <hr class="mt-1 mb-1">
+              <hr class="mt-1 mb-4">
               <div class="row">
                 <div class="col-sm-12 form-field">
                   <div class="form-group">
-                    <button type="button" class="btn btn-light btn-sm btn-close">
+                    <button type="button" class="btn btn-success btn-sm btn-close">
                       Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
                   </div>
                 </div>
               </div>
-              <hr class="mt-1 mb-1">
+              <hr class="mt-1 mb-4">
               <div class="row">
                 <div class="col-sm-6 form-field">
                   <div class="form-group">
@@ -1992,16 +1992,16 @@
 
 
           <div *ngIf="show4">
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-12 form-field">
                 <div class="form-group">
-                  <button type="button" class="btn btn-light btn-sm btn-close">
+                  <button type="button" class="btn btn-success btn-sm btn-close">
                     Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
                 </div>
               </div>
             </div>
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">
@@ -2436,16 +2436,16 @@
             </div>
           </div>
           <div *ngIf="show5">
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-12 form-field">
                 <div class="form-group">
-                  <button type="button" class="btn btn-light btn-sm btn-close">
+                  <button type="button" class="btn btn-success btn-sm btn-close">
                     Select Keywords <i class="fa fa-angle-double-right" aria-hidden="true"></i> </button>
                 </div>
               </div>
             </div>
-            <hr class="mt-1 mb-1">
+            <hr class="mt-1 mb-4">
             <div class="row">
               <div class="col-sm-6 form-field">
                 <div class="form-group">

@@ -18,7 +18,7 @@
 }
 
 .acisForm .btns-block .btn-close {
-  background: lightseagreen;
+  /* background: lightseagreen; */
   color: #fff;
 }
 
@@ -43,6 +43,7 @@
   box-shadow: 0 0 3px 3px #e8ebf1;
   padding: 30px;
   margin-top: 30px;
+  border-top: 4px solid deepskyblue;
 }
 
 .acisForm .form-field:nth-child(odd).textarea {
@@ -61,4 +62,30 @@
 .exceptions-select {
   flex: 0 0 48%;
   max-width: 48%;
+}
+label
+{
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.task1 button
+{
+  width: 70px;
+}
+.acisForm .inner-block hr
+{
+  background: deepskyblue;
+}
+.table thead th
+{
+  vertical-align: middle;
+}
+.table .thead-light th
+{
+background: none;
+color: #fff;
+}
+.table .thead-light
+{
+  background: lightseagreen;
 }

@@ -30,7 +30,12 @@ export class ACISComponent implements OnInit {
 
   }
   ngOnInit() {
-
+    $(document).ready(function () {
+      var page_height = $(window).height();
+      var header_height = $('.navbar').height();
+      var footer_height = $('.page-footer').height();
+      $('.page-height').css('min-height', page_height - (header_height + footer_height));
+    });
   }
 
 }

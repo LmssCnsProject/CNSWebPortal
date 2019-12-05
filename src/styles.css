@@ -51,3 +51,11 @@ background: #cce5ff;
 {
     font-size: 14px;
 }
+.header
+{
+    display: inline-block;
+}
+.inputerror
+{
+    border: 1px solid #dc3545;
+}
